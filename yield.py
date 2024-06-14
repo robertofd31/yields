@@ -75,6 +75,9 @@ filtered_data = data[
 st.write('### Tabla de datos filtrados')
 st.dataframe(filtered_data)
 
+# Input para el ID de la pool
+pool_id = st.text_input('Ingresa el ID de la pool', '')
+
 # Función para manejar la selección de filas en la tabla
 def show_pool_data(pool_id):
     pool_data = get_pool_data(pool_id)
@@ -99,8 +102,7 @@ def show_pool_data(pool_id):
         fig.tight_layout()
         st.pyplot(fig)
 
-# Añadir interacción con la tabla
-selected_pool = st.selectbox('Selecciona una pool para ver detalles', options=filtered_data['pool'].unique())
-if selected_pool:
-    st.write(f"Datos de la pool: {selected_pool}")
-    show_pool_data(selected_pool)
+# Mostrar datos de la pool si se ingresa un ID
+if pool_id:
+    st.write(f"Datos de la pool: {pool_id}")
+    show_pool_data(pool_id)
