@@ -28,10 +28,10 @@ data = get_data()
 st.sidebar.header('Filtros')
 
 # Filtro por proyecto
-projects = st.sidebar.multiselect('Proyecto', options=data['project'].unique(), default=data['project'].unique())
+projects = st.sidebar.selectbox('Proyecto', options=["Todos"] + list(data['project'].unique()))
 
 # Filtro por cadena (chain)
-chains = st.sidebar.multiselect('Chain', options=data['chain'].unique(), default=data['chain'].unique())
+chains = st.sidebar.selectbox('Chain', options=["Todos"] + list(data['chain'].unique()))
 
 # Filtro por símbolo (contiene palabra)
 symbol_filter = st.sidebar.text_input('Símbolo contiene', '')
@@ -46,8 +46,8 @@ tvl_max = st.sidebar.number_input('TVL máximo (USD)', min_value=float(data['tvl
 
 # Aplicar filtros
 filtered_data = data[
-    (data['project'].isin(projects)) &
-    (data['chain'].isin(chains)) &
+    ((data['project'] == projects) if projects != "Todos" else True) &
+    ((data['chain'] == chains) if chains != "Todos" else True) &
     (data['symbol'].str.contains(symbol_filter, case=False)) &
     (data['apy'] >= apy_min) &
     (data['apy'] <= apy_max) &
