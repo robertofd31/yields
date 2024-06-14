@@ -58,6 +58,3 @@ filtered_data = data[
 # Mostrar datos filtrados
 st.write('### Tabla de datos filtrados')
 st.dataframe(filtered_data)
-
-if __name__ == '__main__':
-    st.write(filtered_data)
