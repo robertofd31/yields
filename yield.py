@@ -52,13 +52,13 @@ chains = st.sidebar.selectbox('Chain', options=["Todos"] + list(data['chain'].un
 # Filtro por símbolo (contiene palabra)
 symbol_filter = st.sidebar.text_input('Símbolo contiene', '')
 
-# Filtro por APY
-apy_min = st.sidebar.number_input('APY mínimo', min_value=float(data['apy'].min()), max_value=float(data['apy'].max()), value=float(data['apy'].min()))
-apy_max = st.sidebar.number_input('APY máximo', min_value=float(data['apy'].min()), max_value=float(data['apy'].max()), value=float(data['apy'].max()))
+# Filtro por APY (enteros, incremento de 1)
+apy_min = st.sidebar.number_input('APY mínimo', min_value=int(data['apy'].min()), max_value=int(data['apy'].max()), value=int(data['apy'].min()), step=1)
+apy_max = st.sidebar.number_input('APY máximo', min_value=int(data['apy'].min()), max_value=int(data['apy'].max()), value=int(data['apy'].max()), step=1)
 
-# Filtro por TVL (USD)
-tvl_min = st.sidebar.number_input('TVL mínimo (USD)', min_value=float(data['tvlUsd'].min()), max_value=float(data['tvlUsd'].max()), value=float(data['tvlUsd'].min()))
-tvl_max = st.sidebar.number_input('TVL máximo (USD)', min_value=float(data['tvlUsd'].min()), max_value=float(data['tvlUsd'].max()), value=float(data['tvlUsd'].max()))
+# Filtro por TVL (USD) (enteros, incremento de 5000)
+tvl_min = st.sidebar.number_input('TVL mínimo (USD)', min_value=int(data['tvlUsd'].min()), max_value=int(data['tvlUsd'].max()), value=int(data['tvlUsd'].min()), step=5000)
+tvl_max = st.sidebar.number_input('TVL máximo (USD)', min_value=int(data['tvlUsd'].min()), max_value=int(data['tvlUsd'].max()), value=int(data['tvlUsd'].max()), step=5000)
 
 # Aplicar filtros
 filtered_data = data[
