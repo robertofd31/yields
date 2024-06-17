@@ -4,12 +4,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # Función para obtener y procesar datos
-@st.cache
 def get_data():
     url = 'https://yields.llama.fi/pools'
-    headers = {
-        'accept': '*/*'
-    }
+    headers = {'accept': '*/*'}
     response = requests.get(url, headers=headers)
 
     if response.status_code == 200:
@@ -22,26 +19,15 @@ def get_data():
         st.error('Error fetching data')
         return pd.DataFrame()
 
-# Función para obtener datos de la pool
-def get_pool_data(pool_id):
-    url = f'https://yields.llama.fi/chart/{pool_id}'
-    headers = {
-        'accept': '*/*'
-    }
-    response = requests.get(url, headers=headers)
-
-    if response.status_code == 200:
-        data = response.json()
-        return pd.DataFrame(data['data'])
-    else:
-        st.error('Error fetching pool data')
-        return pd.DataFrame()
-
 # Obtener los datos
-data = get_data()
+if 'data' not in st.session_state:
+    st.session_state.data = get_data()
 
 # Sidebar filters
 st.sidebar.header('Filtros')
+
+# Resto del código para filtrar y mostrar datos...
+
 
 # Filtro por proyecto
 projects = st.sidebar.selectbox('Proyecto', options=["Todos"] + list(data['project'].unique()))
