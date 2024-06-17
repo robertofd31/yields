@@ -19,6 +19,19 @@ def get_data():
         st.error('Error fetching data')
         return pd.DataFrame()
 
+# Función para obtener datos de la pool
+def get_pool_data(pool_id):
+    url = f'https://yields.llama.fi/chart/{pool_id}'
+    headers = {'accept': '*/*'}
+    response = requests.get(url, headers=headers)
+
+    if response.status_code == 200:
+        data = response.json()
+        return pd.DataFrame(data['data'])
+    else:
+        st.error('Error fetching pool data')
+        return pd.DataFrame()
+
 # Obtener los datos
 if 'data' not in st.session_state:
     st.session_state.data = get_data()
@@ -26,35 +39,32 @@ if 'data' not in st.session_state:
 # Sidebar filters
 st.sidebar.header('Filtros')
 
-# Resto del código para filtrar y mostrar datos...
-
-
 # Filtro por proyecto
-projects = st.sidebar.selectbox('Proyecto', options=["Todos"] + list(data['project'].unique()))
+projects = st.sidebar.selectbox('Proyecto', options=["Todos"] + list(st.session_state.data['project'].unique()))
 
 # Filtro por cadena (chain)
-chains = st.sidebar.selectbox('Chain', options=["Todos"] + list(data['chain'].unique()))
+chains = st.sidebar.selectbox('Chain', options=["Todos"] + list(st.session_state.data['chain'].unique()))
 
 # Filtro por símbolo (contiene palabra)
 symbol_filter = st.sidebar.text_input('Símbolo contiene', '')
 
 # Filtro por APY (enteros, incremento de 1)
-apy_min = st.sidebar.number_input('APY mínimo', min_value=int(data['apy'].min()), max_value=int(data['apy'].max()), value=int(data['apy'].min()), step=1)
-apy_max = st.sidebar.number_input('APY máximo', min_value=int(data['apy'].min()), max_value=int(data['apy'].max()), value=int(data['apy'].max()), step=1)
+apy_min = st.sidebar.number_input('APY mínimo', min_value=int(st.session_state.data['apy'].min()), max_value=int(st.session_state.data['apy'].max()), value=int(st.session_state.data['apy'].min()), step=1)
+apy_max = st.sidebar.number_input('APY máximo', min_value=int(st.session_state.data['apy'].min()), max_value=int(st.session_state.data['apy'].max()), value=int(st.session_state.data['apy'].max()), step=1)
 
 # Filtro por TVL (USD) (enteros, incremento de 5000)
-tvl_min = st.sidebar.number_input('TVL mínimo (USD)', min_value=int(data['tvlUsd'].min()), max_value=int(data['tvlUsd'].max()), value=int(data['tvlUsd'].min()), step=5000)
-tvl_max = st.sidebar.number_input('TVL máximo (USD)', min_value=int(data['tvlUsd'].min()), max_value=int(data['tvlUsd'].max()), value=int(data['tvlUsd'].max()), step=5000)
+tvl_min = st.sidebar.number_input('TVL mínimo (USD)', min_value=int(st.session_state.data['tvlUsd'].min()), max_value=int(st.session_state.data['tvlUsd'].max()), value=int(st.session_state.data['tvlUsd'].min()), step=5000)
+tvl_max = st.sidebar.number_input('TVL máximo (USD)', min_value=int(st.session_state.data['tvlUsd'].min()), max_value=int(st.session_state.data['tvlUsd'].max()), value=int(st.session_state.data['tvlUsd'].max()), step=5000)
 
 # Aplicar filtros
-filtered_data = data[
-    ((data['project'] == projects) if projects != "Todos" else True) &
-    ((data['chain'] == chains) if chains != "Todos" else True) &
-    (data['symbol'].str.contains(symbol_filter, case=False)) &
-    (data['apy'] >= apy_min) &
-    (data['apy'] <= apy_max) &
-    (data['tvlUsd'] >= tvl_min) &
-    (data['tvlUsd'] <= tvl_max)
+filtered_data = st.session_state.data[
+    ((st.session_state.data['project'] == projects) if projects != "Todos" else True) &
+    ((st.session_state.data['chain'] == chains) if chains != "Todos" else True) &
+    (st.session_state.data['symbol'].str.contains(symbol_filter, case=False)) &
+    (st.session_state.data['apy'] >= apy_min) &
+    (st.session_state.data['apy'] <= apy_max) &
+    (st.session_state.data['tvlUsd'] >= tvl_min) &
+    (st.session_state.data['tvlUsd'] <= tvl_max)
 ]
 
 # Mostrar datos filtrados
