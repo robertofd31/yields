@@ -2,5 +2,5 @@ streamlit
 requests
 pandas
 matplotlib
-bs4
-re
+beautifulsoup4
+lxml
