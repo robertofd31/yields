@@ -18,7 +18,7 @@ def get_defi_llama_data():
         data = response.json()
         df = pd.DataFrame(data["data"])
         stable_df = df[df['stablecoin'] == True]
-        stable_df['pool'] = 'https://defillama.com/yields/pool/' + stable_df['pool'].astype(str)
+        stable_df['pool'] = 'https://defillama.com/yields/pool/' + stable_df['pool']
         stable_df_filtered = stable_df[['project', 'chain', 'symbol', 'apy', 'tvlUsd', 'apyMean30d', 'pool','enlace']]
         return stable_df_filtered
     else:
