@@ -137,8 +137,10 @@ def defi_llama_page():
         (st.session_state.defi_llama_data['tvlUsd'] >= tvl_min) &
         (st.session_state.defi_llama_data['tvlUsd'] <= tvl_max)
     ]
+    filtered_data['pool'] = filtered_data['pool'].apply(lambda x: f'<a href="{x}" target="_blank">{x}</a>')
 
     st.write('### Tabla de datos filtrados')
+
     st.dataframe(filtered_data)
 
     pool_id = st.text_input('Ingresa el ID de la pool', '')
