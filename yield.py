@@ -137,7 +137,7 @@ def defi_llama_page():
         (st.session_state.defi_llama_data['tvlUsd'] >= tvl_min) &
         (st.session_state.defi_llama_data['tvlUsd'] <= tvl_max)
     ]
-    filtered_data['pool'] = filtered_data['pool'].apply(lambda x: f'<a href="{x}" target="_blank">{x}</a>')
+    filtered_data['pool'] = 'https://defillama.com/yields/pool/' + filtered_data['pool']
 
     st.write('### Tabla de datos filtrados')
 
