@@ -140,11 +140,7 @@ def defi_llama_page():
     ]
 
     st.write('### Tabla de datos filtrados')
-    # Convert the 'enlace' column to clickable links
-    filtered_data['enlace'] = filtered_data['enlace'].apply(lambda x: f'<a href="{x}" target="_blank">Ver en DeFiLlama</a>')
-    
-    # Display the dataframe with the HTML-formatted 'enlace' column
-    st.write(filtered_data.to_html(escape=False, index=False), unsafe_allow_html=True)
+    st.dataframe(filtered_data)
 
     pool_id = st.text_input('Ingresa el ID de la pool', '')
     if pool_id:
