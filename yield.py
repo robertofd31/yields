@@ -19,6 +19,7 @@ def get_defi_llama_data():
         df = pd.DataFrame(data["data"])
         stable_df = df[df['stablecoin'] == True]
         stable_df_filtered = stable_df[['project', 'chain', 'symbol', 'apy', 'tvlUsd', 'apyMean30d', 'pool']]
+        stable_df_filtered['enlace'] = 'https://defillama.com/yields/pool/' + stable_df_filtered['pool'].astype(str)
         return stable_df_filtered
     else:
         st.error('Error fetching data from DeFiLlama')
