@@ -90,7 +90,7 @@ def process_elements(p_elements):
 
 # Función para obtener datos del web scraping
 def get_scraped_data():
-    lista = ["USDC USDT"]
+    lista = ["USDC USDT", "USDC", "USDT", "DAI", "FRAX", "USDe", "MAI"]
     proxies = {
         "https": "scraperapi.render=true:427b3db93cce1266f1a94aef300f1c5c@proxy-server.scraperapi.com:8001"
     }
