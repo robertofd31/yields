@@ -92,7 +92,7 @@ def process_elements(p_elements):
 def get_scraped_data():
     lista = ["USDC USDT", "USDC", "USDT", "DAI", "FRAX", "USDe", "MAI"]
     proxies = {
-        "https": "scraperapi.render=true:427b3db93cce1266f1a94aef300f1c5c@proxy-server.scraperapi.com:8001"
+        "https": "scraperapi.render=true:fac54f9bf242ce7d495171bf96ca86e3@proxy-server.scraperapi.com:8001" #427b3db93cce1266f1a94aef300f1c5c
     }
     combined_df = pd.DataFrame()
 
